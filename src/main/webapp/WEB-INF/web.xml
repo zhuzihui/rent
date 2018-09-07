@@ -1,0 +1,48 @@
+<!-- <?xml version="1.0" encoding="ISO-8859-1"?> -->
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1" metadata-complete="false">
+	<display-name>Archetype Created Web Application</display-name>
+
+		<!-- 配置spring容器 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:beans*.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- <servlet>
+		<servlet-name>AccountServlet</servlet-name>
+		<display-name>AccountServlet</display-name>
+		<description></description>
+		<servlet-class>com.yc.servlet.AccountServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AccountServlet</servlet-name>
+		<url-pattern>/account.action</url-pattern>
+	</servlet-mapping>
+ -->
+ 		<!-- 1.配置Springmvc核心控制器 -->
+	<servlet>
+		<servlet-name>beans</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:beans*.xml</param-value>
+		</init-param>
+			<!-- 上面一定要写，否则报这个错误：java.io.FileNotFoundException: Could not open ServletContext resource [/WEB-INF/application-servlet.xml] -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- Map all requests to the DispatcherServlet for handling -->
+	<servlet-mapping>
+		<servlet-name>beans</servlet-name>
+		<url-pattern>/</url-pattern>		<!-- *.action   匹配的是最后一个有.action结尾的路径 -->
+	</servlet-mapping>
+
+
+</web-app>
+	

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+	<!-- property:对应自己写的实体Bean类3写的属性  是要将查出来的column  列名  里面的值传进去 -->
+<mapper namespace="com.yc.dao.HouseDao">
+	<!-- 使用二级缓存 -->
+	<cache eviction="FIFO" flushInterval="6000" size="512" readOnly="true"></cache>
+	
+	
+	<select id="findAllHouse" resultType="com.yc.bean.House">
+		select * from house
+	</select>
+	
+	<insert id="addHouse" parameterType="com.yc.bean.House">
+		insert into house(U_ID,HT_ID,H_TITLE,H_DESCRIPTION,H_PRICE,H_PUBDATE,H_FLOORAGE,H_CONTENT,S_ID)
+			 values(#{U_ID},#{HT_ID},#{H_TITLE},#{H_DESCRIPTION},#{H_PRICE},#{H_PUBDATE},#{H_FLOORAGE},#{H_CONTENT},#{S_ID})
+	</insert>
+	
+	<select id="selectCounts" resultType="int">
+		select count(*) from house
+	</select>
+	
+	<select id="findPage" parameterType="com.yc.bean.Page" resultType="com.yc.bean.House">
+		select * from house limit #{start},#{pagesize}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--  存取转账的业务放在业务层 -->
+	<!-- <update id="updateAccount" parameterType="com.yc.bean.Account">
+		update account set balance=balance+#{balance} where accountid=#{accountid}
+	
+	</update> 
+	
+	<select id="findAccount" resultType="com.yc.bean.Account" parameterType="int">
+		select * from account where accountid=#{accountid}
+	</select>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- <resultMap type="com.yc.model.FilmInfo" id="FilmInfoMap">
+		<id property="filmid" column="filmid" />
+		<result property="typeid" column="typeid" />
+		<result property="filmname" column="filmname" />
+		<result property="actor" column="actor" />
+		<result property="director" column="director" />
+		<result property="ticketprice" column="ticketprice" />
+		一对一的关联
+		<association property="filmtype" javaType="com.yc.model.Filmtype"> 
+			<id property="typeid" column="typeid" /> <result property="typename" column="typename" 
+			/> </association>
+		这个filmtype是FilmInfo实体类中写的映射属性 ，后面那个typeid表示要传进去的列名里面的值
+		<association property="filmtype" column="typeid" select="selectTypeid" />
+	</resultMap>
+	
+	
+	#{typeid} 大括号里面的参数必须要和你传进来的实体类里面的 属性名 一模一样 否则无法传进参
+	<insert id="insert" parameterType="com.yc.model.FilmInfo">
+		insert into
+		filminfo(typeid,filmname,actor,director,ticketprice)
+		values(#{typeid},#{filmname},#{actor},#{director},#{ticketprice})
+
+	</insert>
+
+	#{typeid} 大括号里面的参数必须要和你传进来的实体类里面的 属性名 一模一样 否则无法传进参
+	<select id="select" resultMap="FilmInfoMap">
+		select * from filminfo
+		<where>
+			<if test="typeid != null and typeid != ''">
+				typeid = #{typeid}
+			</if>
+		</where>
+	</select>
+
+	2
+	<select id="selectTypeid" parameterType="int" resultType="com.yc.model.Filmtype">
+		select * from filmtype where typeid=#{typeid}
+	</select>
+
+	1
+	<select id="selectAll" resultMap="FilmInfoMap">
+		select * from filminfo
+	</select>
+	
+	<select id="selectMap" parameterType="Map" resultMap="filmInfoMap">
+		select filmid,typename,filminfo.typeid as typeid,filmname,actor,director,ticketprice
+			from filminfo
+			left join filmtype
+			on filmtype.typeid=filminfo.typeid
+		<where>
+			<if test="filmname!=null and filmname!='' ">
+				and filmname like '%${filmname}%'
+			</if>
+			<if test="typename!=null and typename!='' ">
+				and filmtype.typename=#{typename}
+			</if>
+			<if test="actor!=null and actor!='' ">
+				and filminfo.actor=#{actor}
+			</if>
+			<if test="director!=null and director!='' ">
+				and filminfo.director=#{director}
+			</if>
+			<if test="minprice!=null and maxprice!='' ">
+				and filminfo.ticketprice between ${minprice} and ${maxprice}
+			</if>
+		</where>
+	</select>
+	<resultMap type="com.yc.model.FilmInfo" id="filmInfoMap">
+		<id property="filmid" column="filmid" />
+		<result property="typeid" column="typeid" />
+		<result property="filmname" column="filmname" />
+		<result property="actor" column="actor" />
+		<result property="director" column="director" />
+		<result property="ticketprice" column="ticketprice" />
+		<association property="filmtype" resultMap="filmtypeMap"></association>
+	</resultMap>
+	<resultMap type="com.yc.model.Filmtype" id="filmtypeMap">
+		<id property="typeid" column="typeid"/>
+		<result property="typename" column="typename"/>
+	</resultMap> -->
+	
+</mapper>
